@@ -17,4 +17,4 @@ preety exicted to see our project in action. It is already been half a month sin
 
 I will publish more post regarding my project's update in future. So stay tuned!!!!
 
-<a markdown="0" href="https://summerofcode.withgoogle.com/projects/#5056427950342144" class="btn btn-success">Streams API in PDF.js on GSoC projects page</a>
+<a markdown="0" href="https://summerofcode.withgoogle.com/projects/#5056427950342144" class="btn btn-success">"Streams API in PDF.js" in GSoC-2017</a>
