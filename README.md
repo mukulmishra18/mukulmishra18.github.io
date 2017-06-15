@@ -2,4 +2,4 @@
 
 My personal blog hosted on Github Pages.
 
-Visit [mukulmishra.me](http://mukulmishra.me) for more informations.
+Visit [mukulmishra.me](http://mukulmishra.me) to see blog posts.

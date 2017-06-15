@@ -1,7 +1,14 @@
-# First post for this blog
+---
+layout: post
+title: "First post"
+categories: blog
+---
+
 
 ## Hello,
 
-This is my post for this blog.
+This is my first post for this blog.
 This blog is hosted on Github Pages and
-uses Jykell theme So Simple!!
+powered by Jykell.
+
+Theme used here is `So Simple`!!
