@@ -4,7 +4,6 @@ title: "First post"
 categories: blog
 ---
 
-
 ## Hello,
 
 This is my first post for this blog.
