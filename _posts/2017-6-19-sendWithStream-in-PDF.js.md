@@ -6,7 +6,7 @@ categories: blog
 
 ## Hi !!
 
-This is second post in the series of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), i gave a brief introduction of my project. In this post, i am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
+This is second post in the series of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), I gave a brief introduction of my project. In this post, I am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
 
 ## What is messageHandler, and how it is used?
 
@@ -55,6 +55,6 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 
 #### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
 
-`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal controller at main side to perform required action like `enqueue`, `close`, `error`. It also stores sink’s internal state(like `desiredSize` and `ready`) to block sending enqueue messages when stream’s internal queue is full.
+`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal controller at main side to perform required action like _enqueue_, _close_, _error_. It also stores sink’s internal state(like _desiredSize_ and _ready_) to block sending enqueue messages when stream’s internal queue is full.
 
 Follow [sendWithStream PR](https://github.com/mozilla/pdf.js/pull/8430) for all the discussions or read the full code [here.](https://github.com/mukulmishra18/pdf.js/commit/bbd9968f76c68f6120a6e36825796347b7bb152a)
