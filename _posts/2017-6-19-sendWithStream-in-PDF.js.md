@@ -31,7 +31,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 
 ## What is sendWithStream, and how it helps?
 
-### Some basic terminology used in sendWithStream, we need to understand first:
+#### Some basic terminology used in sendWithStream, we need to understand first:
 
 - **Queuing Strategy**: A queuing strategy is an object that determines how a stream should signal backpressure based on the state of its internal queue.
 
@@ -42,7 +42,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 - **Desired Size**: It is the required number of chunks that is needed to fill the internal queue completely. The resulting difference, high water mark minus total size, is used to determine the desired size.
 
 
-### So how sendWithStream works?
+#### So how sendWithStream works?
 
 _sendWithStream_ method is used to send stream action messages to other side(e.g worker) and store incoming data in stream’s _internal queue_, that can be read using stream’s reader. It returns an instance of _ReadableStream_ that can be used to manipulate the flow of data using it’s **underlying sources(start, pull and cancel)**.
 
@@ -52,7 +52,7 @@ _sendWithStream_ method is used to send stream action messages to other side(e.g
 
 - **cancel**: cancel is used to cancel/close the underlying source.
 
-### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
+#### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
 
 _StreamSink_ is an helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal controller at main side to perform required action like _enqueue_, _close_, _error_. It also store sink’s internal state(like desiredSize and ready) to block sending enqueue messages when stream’s internal queue is full.
 
