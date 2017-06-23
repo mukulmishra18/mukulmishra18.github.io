@@ -4,7 +4,7 @@ title: "SendWithStream in PDF.js"
 categories: blog
 ---
 
-## Hi!!!
+## Hi !!
 
 This is second post of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), i gave a brief introduction of my project. In this post, i am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
 
