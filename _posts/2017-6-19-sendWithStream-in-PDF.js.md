@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sendWithStream in PDF.js"
+title: "SendWithStream in PDF.js"
 categories: blog
 ---
 
@@ -23,36 +23,36 @@ let messageHandler2 = new MessageHandler('worker', 'main', fakePort);
 messageHandler2.on('fakeHandler', () => {
   // Do some action here.
   // Send data back to main thread.
-})
+});
 
 // Sending `fakeHandler` event from main to worker thread.
-messageHandler1.sendWithPromise('fakeHandler');
+messageHandler1.sendWithPromise('fakeHandler', {});
 ```
 
 ## What is sendWithStream, and how it helps?
 
-**Some basic terminology used in sendWithStream, we need to understand first**
+### Some basic terminology used in sendWithStream, we need to understand first:
 
-- Queuing Strategy: A queuing strategy is an object that determines how a stream should signal backpressure based on the state of its internal queue.
+- **Queuing Strategy**: A queuing strategy is an object that determines how a stream should signal backpressure based on the state of its internal queue.
 
-- Backpressure: The process of normalizing flow of chunks from the source to destination is called Backpressure. It is used to regulate the speed of flow of chunks, and signal source to slow down the flow when internal queue is full.
+- **Backpressure**: The process of normalizing flow of chunks from the source to destination is called Backpressure. It is used to regulate the speed of flow of chunks, and signal source to slow down the flow when internal queue is full.
 
-- High Water Mark: Maximum number of chunks that can be enqueued into the internal queue to fill it completely. When number of chunks in internal queue reached to high water mark backpressure is signaled to stop further production of chunk from source.
+- **High Water Mark**: Maximum number of chunks that can be enqueued into the internal queue to fill it completely. When number of chunks in internal queue reached to high water mark backpressure is signaled to stop further production of chunk from source.
 
-- Desired Size: It is the required number of chunks that is needed to fill the internal queue completely. The resulting difference, high water mark minus total size, is used to determine the desired size.
+- **Desired Size**: It is the required number of chunks that is needed to fill the internal queue completely. The resulting difference, high water mark minus total size, is used to determine the desired size.
 
 
-**So how sendWithStream works**
+### So how sendWithStream works?
 
 _sendWithStream_ method is used to send stream action messages to other side(e.g worker) and store incoming data in stream’s _internal queue_, that can be read using stream’s reader. It returns an instance of _ReadableStream_ that can be used to manipulate the flow of data using it’s **underlying sources(start, pull and cancel)**.
 
-- start: start underlying source of ReadableStream is called immediately and used to adapt push source. In messageHandler it is used to send message to other side to notify the start of particular action.
+- **start**: start underlying source of ReadableStream is called immediately and used to adapt push source. In messageHandler it is used to send message to other side to notify the start of particular action.
 
-- pull: pull underlying source is called whenever stream’s internal queue of chunks is not full, and will be called repeatedly until the queue reaches its high water mark.
+- **pull**: pull underlying source is called whenever stream’s internal queue of chunks is not full, and will be called repeatedly until the queue reaches its high water mark.
 
-- cancel: cancel is used to cancel/close the underlying source.
+- **cancel**: cancel is used to cancel/close the underlying source.
 
-**[StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?**
+### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
 
 _StreamSink_ is an helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal controller at main side to perform required action like _enqueue_, _close_, _error_. It also store sink’s internal state(like desiredSize and ready) to block sending enqueue messages when stream’s internal queue is full.
 
