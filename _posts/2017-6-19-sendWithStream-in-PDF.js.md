@@ -62,21 +62,22 @@ If we look at a minimalistic version of `StreamSink`, it will look something lik
 ```javascript
 let streamSink = {
   enqueue(chunk, size = 1) {
-  	// Send message + data to main thread,
-	// to enqueue into controller.
-  	sendStreamRequest({ stream: 'enqueue', chunk, });
+    // Decrese the desiredSize of sink, to regulate enqueue of chunks.
+    this.desiredSize -= size;
+    // Send message/chunks to main thread, to enqueue into controller.
+    sendStreamRequest({ stream: 'enqueue', chunk, });
   },
 
   close() {
-  	// Send close message to close controller in main thread.
-  	sendStreamRequest({ stream: 'close', });
-  	// Delete streamSink for memory cleanup.
-  	delete self.streamSinks[streamId];
+    // Send close message to close controller in main thread.
+    sendStreamRequest({ stream: 'close', });
+    // Delete streamSink for memory cleanup.
+    delete self.streamSinks[streamId];
   },
 
   error() {
-  	// Send error message to main thread.
-  	sendStreamRequest({ stream: 'error', reason, });
+    // Send error message to main thread.
+    sendStreamRequest({ stream: 'error', reason, });
   },
 
   sinkCapability: capability,
@@ -87,9 +88,9 @@ let streamSink = {
 };
 ```
 `StreamSink` can be compared to `WritableStream`, as the main motive of creating sink at worker,
-is to write into the sink(by calling `sink.enqueue()`) and send the data back to main thread.
+is to write into the sink(by calling `sink.enqueue()`) and send the data back to main thread. _StreamSink_ mimic the required functionality of `StreamController` into worker and used to regulate the flow of data in accordance with _controller's_ internal state.
 
-**Components of StreamSink:**
+#### Components of StreamSink:**
 
 - **enqueue:** This method is used to enqueue the data into the controller by sending `enqueue` message to main thread. 
 
@@ -103,8 +104,10 @@ is to write into the sink(by calling `sink.enqueue()`) and send the data back to
 
 - **onCancel:**(optional) This method calls whenever cancel _underlyingSource_ is called.
 
-- **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to desiredSize of stream whenever pull is called and decresed whenever enqueue is performed.
+- **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to _desiredSize_ of stream whenever pull is called and decresed whenever enqueue is performed.
 
 - **ready:** This property defines the state of sink(i.e. pending or resolved promise). If `this.desiredSize <= 0` ready is in pending state else ready is resolved. Enqueue is not performed when ready is in pending state.
+
+**Note:** As for now we are unable to send _promises_ and _streams_ to worker thread as tranferable objects, see [this](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage). Maybe in future we can do so, but for now we have to support old browsers.
 
 Follow [sendWithStream PR](https://github.com/mozilla/pdf.js/pull/8430) for all the discussions or read the full code [here.](https://github.com/mukulmishra18/pdf.js/commit/bbd9968f76c68f6120a6e36825796347b7bb152a)
