@@ -55,7 +55,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 
 #### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
 
-`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal controller(at main thread) to perform required action like _enqueue_, _close_, _error_. It also stores sink’s internal state(like _desiredSize_ and _ready_) to block sending enqueue messages when stream’s internal queue is full.
+`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal _stream controller_(at main thread) to perform required action like _enqueue_, _close_, _error_. It also stores sink’s internal state(like _desiredSize_ and _ready_) to block sending enqueue messages when stream’s internal queue is full.
 
 If we look at a minimalistic version of `StreamSink`, it will look something like:
 
@@ -88,26 +88,26 @@ let streamSink = {
 };
 ```
 `StreamSink` can be compared to `WritableStream`, as the main motive of creating sink at worker,
-is to write into the sink(by calling `sink.enqueue()`) and send the data back to main thread. _StreamSink_ mimic the required functionality of `StreamController` into worker and used to regulate the flow of data in accordance with _controller's_ internal state.
+is to write into the sink(by calling `sink.enqueue()`) and send the data back to main thread. _StreamSink_ mimic the functionalities of `StreamController` into worker and used to regulate the flow of data chunks in accordance with stream's internal state.
 
-#### Components of StreamSink:**
+#### Components of StreamSink:
 
-- **enqueue:** This method is used to enqueue the data into the controller by sending `enqueue` message to main thread. 
+- **enqueue:** This method is used to enqueue the data into the controller by sending _enqueue_ message to main thread. 
 
-- **close:** This method is used to close the controller by sending `close` message to main thread.
+- **close:** This method is used to close the controller by sending _close_ message to main thread.
 
-- **error:** This method is used to error the controller by sending `error` message to main thread.
+- **error:** This method is used to error the controller by sending _error_ message to main thread.
 
-- **sinkCapability:** Promise capability{Object} of sink(returned by `createPromiseCapability()`), resolves the capability(by calling`sinkCapability.resolve`) whenever needs.
+- **sinkCapability:** Promise capability of sink(returned by `createPromiseCapability`), resolves the capability(by calling`sinkCapability.resolve`) whenever needs.
 
 - **onPull:**(optional) This method calls whenever pull _underlyingSource_ is called.
 
 - **onCancel:**(optional) This method calls whenever cancel _underlyingSource_ is called.
 
-- **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to _desiredSize_ of stream whenever pull is called and decresed whenever enqueue is performed.
+- **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to _desiredSize_ of stream whenever pull is called and decresed by size of chunk whenever enqueue is performed.
 
 - **ready:** This property defines the state of sink(i.e. pending or resolved promise). If `this.desiredSize <= 0` ready is in pending state else ready is resolved. Enqueue is not performed when ready is in pending state.
 
-**Note:** As for now we are unable to send _promises_ and _streams_ to worker thread as tranferable objects, see [this](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage). Maybe in future we can do so, but for now we have to support old browsers.
+**Note:** As for now, we are unable to send _promises_ and _streams_ to worker thread as transferable objects, see [this](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage). Maybe in future we can do so, but for now we have to support old browsers.
 
 Follow [sendWithStream PR](https://github.com/mozilla/pdf.js/pull/8430) for all the discussions or read the full code [here.](https://github.com/mukulmishra18/pdf.js/commit/bbd9968f76c68f6120a6e36825796347b7bb152a)
