@@ -118,24 +118,23 @@ getTextContent() {
 
 - Browser: Chrome (version: 58.0.3)
 
-- PDF: http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf
+- PDF: [http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf](http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf)
 
-- script[1]: https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049
+- script[1]: [https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049](https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049)
 
 **Output:**
 
-| Branch | 1 | 2 | 3 | 4 | 5 | 6 |
+| Branch\measurement[2] | 1 | 2 | 3 | 4 | 5 | 6 |
 | ---- | --- | --- | --- | --- | --- | --- |
 | master | 399.39 | 397.07 | 416.43 | 405.59 | 433.07 | 428.06 |
 | streams | 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
 
-
-| Branch | 1 | 2 | 3 |
+| Branch\measurement[3] | 1 | 2 | 3 |
 | ---- | --- | --- | --- |
 | master | 16.74 | 16.25 | 16.81 |
 | streams | 17.44 | 18.07 | 18.07 |
 
 
-[1]: Run script in web console to perform automatic scrolling.
-[2]: Memory used(in MB) during measurement.
-[3]: Average fps during measurement.
+1: Run script in web console to perform automatic scrolling.
+2: Memory used(in MB) during measurement.
+3: Average fps during measurement.
