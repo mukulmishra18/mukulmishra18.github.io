@@ -6,7 +6,7 @@ categories: blog
 
 ## Hello,
 
-I think I am bit late to write this post, but here I am. This is first post in the series of my **Google Summer of Code 2017** experience.
+I think I am bit late to write this post, but here I am. This is the first post in the series of my **Google Summer of Code 2017** experience.
 
 This summer is going to be fun, because I got selected for **_Google Summer of Code_** with
 **_Mozilla_** as mentoring organisation. During this period, i will be working on one of the core projects of Mozilla Labs [PDF.js](https://github.com/mozilla/pdf.js). [My project](https://github.com/mozilla/pdf.js/projects/4) is to use [Streams API](https://github.com/whatwg/streams) in PDF.js networking and rendering task, to make it more efficient in terms of speed and memory.

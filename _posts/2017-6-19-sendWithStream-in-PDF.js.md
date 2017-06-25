@@ -6,13 +6,13 @@ categories: blog
 
 ## Hi !!
 
-This is second post in the series of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), I gave a brief introduction of my project. In this post, I am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
+This is the second post in the series of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), I gave a brief introduction of my project. In this post, I am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
 
 ## What is messageHandler, and how it is used?
 
-PDF.js uses [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) for parsing PDF commands in background(worker) threads, so that the main thread wouldn't get blocked. At worker thread, PDF commands are parsed and sent to main thread for rendering on HTML canvas. All message passing are done using a common port between the two sides. Here comes `messageHandler` into action, it is a factory, that is used for passing message/data between the two threads. We can listen for an event and trigger some actions using [`_onComObjonMessage`](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1251) method of _messageHandler_.
+PDF.js uses [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) for parsing PDF commands in background(worker) threads, so that the main thread wouldn't get blocked. At worker thread, PDF commands are parsed and sent to main thread for rendering on HTML canvas. All message passing are done using a common port between the two sides. Here `messageHandler` comes into action, it is a factory, that is used for passing message/data between the two threads. We can listen for an event and trigger some actions using [`_onComObjonMessage`](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1251) method of _messageHandler_.
 
-For example, say I wanted to setup message passing for `fakeHandler` event, between main and worker threads. I could do it something like:
+For example, say I wanted to setup message passing for `fakeHandler` event, between main and worker threads. I could do something like this:
 
 ```javascript
 // Setting up messageHandlers on both sides(main + worker).
@@ -43,7 +43,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 - **Desired Size**: It is the required number of chunks that is needed to fill the internal queue completely. The resulting difference, high water mark minus total size, is used to determine the _desired size_.
 
 
-#### So how sendWithStream works?
+#### So how does sendWithStream works?
 
 `sendWithStream` method is used to send stream action messages to other side(e.g worker) and store incoming data in stream’s _internal queue_, that can be read using stream’s reader. It returns an instance of `ReadableStream` that can be used to manipulate the flow of data using its **underlyingSources** = `{ start() { }, pull() { }, cancel() { } }`.
 
@@ -55,7 +55,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 
 #### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
 
-`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller to this side(worker), we can use _streamSink_ to signal _stream controller_(at main thread) to perform required action like _enqueue_, _close_, _error_. It also stores sink’s internal state(like _desiredSize_ and _ready_) to block sending enqueue messages when stream’s internal queue is full.
+`StreamSink` is a helper object on the other side(e.g worker) to store sink’s internal state and send message to main side to perform required action. As we don’t have access to stream controller on this side(worker), we can use _streamSink_ to signal _stream controller_(at main thread) to perform required action like _enqueue_, _close_, _error_. It also stores sink’s internal state(like _desiredSize_ and _ready_) to block sending enqueue messages when stream’s internal queue is full.
 
 If we look at a minimalistic version of `StreamSink`, it will look something like:
 

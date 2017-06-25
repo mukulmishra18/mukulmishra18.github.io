@@ -6,7 +6,7 @@ categories: blog
 
 ## Hello !!
 
-This is third post in the series of my **Google Summer of Code 2017** experience. In [last post](http://mukulmishra.me/blog/sendWithStream-in-PDF.js/), I gave detailed overview of `SendWithStream` method of `MessageHandler`. In this post, I am going to give updates of [my project](https://github.com/mozilla/pdf.js/projects/4) _Streams API in PDF.js_.
+This is the third post in the series of my **Google Summer of Code 2017** experience. In [last post](http://mukulmishra.me/blog/sendWithStream-in-PDF.js/), I gave detailed overview of `SendWithStream` method of `MessageHandler`. In this post, I am going to give updates of [my project](https://github.com/mozilla/pdf.js/projects/4) _Streams API in PDF.js_.
 
 First phase of coding is about to end, and we already have our first Streams API supported PDF.js API i.e. **streamTextContent**. This API is inspired from PDF.js [**getTextContent**](https://github.com/mozilla/pdf.js/blob/master/src/display/api.js#L958) API, that is used to extract text contents of PDFs. As name suggests, _streamTextContent_ can be used to stream text contents of PDFs incrementally in small chunks.
 
@@ -73,10 +73,11 @@ For not breaking the support for `getTextContent` API, we have created a paralle
 
 ```javascript
 getTextContent() {
+  params = params || {};
   let readableStream = this.streamTextContent(params);
 
   return new Promise(function(resolve, reject) {
-    function pump() {
+    function pump(params) {
       reader.read().then(function({ value, done, }) {
         if (done) {
           resolve(textContent);
@@ -100,4 +101,40 @@ getTextContent() {
 }
 ```
 
+#### Performance measurement of streamTextContent:
 
+**Steps for measuring the performance:**
+
+- Open the viewer in master branch, and paste [this](https://gist.github.com/mukulmishra18/831e74fc0d49398f3172c5af0c6c4afc) code in console to take data for automation of scrolling.
+
+- Paste above taken data(or [this](https://gist.github.com/mukulmishra18/784136c6b75dacf6043c38d18039d0d5)) into the console(as `rr = data`), and run [this](https://gist.github.com/mukulmishra18/19e53e31fb89ce704866a7e2ad06d3a5) code in console to perform automatic viewer scrolling.
+
+- Measure the memory usage using devtools or run [this](https://gist.github.com/mukulmishra18/18635de4c82522bde3e7c4c0761f3365) code as `python name_of_file.py <pID>`, where pID is process ID of viewer. This will give peak memory used, when process ends.
+
+
+**Measurement Configuration:**
+
+- Operating system: Ubuntu 14.04 LTS
+
+- Browser: Chrome (version: 58.0.3)
+
+- PDF: http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf
+
+- script[1]: https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049
+
+**Output:**
+
+| Branch\measurement[2] | 1 | 2 | 3 | 4 | 5 | 6 |
+| ---- | --- | --- | --- | --- | --- | --- |
+| master | 399.39 | 397.07 | 416.43 | 405.59 | 433.07 | 428.06 |
+| streams | 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
+
+| Branch\measurement[3] | 1 | 2 | 3 |
+| ---- | --- | --- | --- |
+| master | 16.74 | 16.25 | 16.81 |
+| streams | 17.44 | 18.07 | 18.07 |
+
+
+[1]: Run script in web console to perform automatic scrolling.
+[2]: Memory used(in MB) during measurement.
+[3]: Average fps during measurement.
