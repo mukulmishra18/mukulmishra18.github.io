@@ -34,7 +34,7 @@ I would recommend to read my [last post](http://mukulmishra.me/blog/sendWithStre
 When `getTextContent` API is called at main thread, it sends message to worker using `MessageHandler`.
 This message is handled by _[GetTextContent](https://github.com/mozilla/pdf.js/blob/master/src/core/worker.js#L877)_ handler in _worker.js_ file. Parsing of PDF commands are done in _evaluator.js_, `GetTextContent` handler calls `getTextContent` method of `PartialEvaluator` via _document.js_ file. In _getTextContent_ method of _PartialEvaluator_, whole [textContent](https://github.com/mozilla/pdf.js/blob/master/src/core/evaluator.js#L1188) is build and send back to main thread by resolving promises.
 
-Building whole text content at worker and sending back to main thread in bulk take lots of memory. Text content is only available at main thread, when promise at `PartialEvaluator` is resolve(i.e. `resolve(textContent)`), that forces rendering processes to wait. This degrade user experience(like janky scrolling, slow rendering...).
+Building whole text content at worker and sending back to main thread in bulk take lots of memory. Text content is only available at main thread, when promise at `PartialEvaluator` is resolve(i.e. `resolve(textContent)`), that forces rendering processes to wait. This degrade user experience(by janky scrolling, slow rendering...).
 
 
 **Incrementally sending chunks using streamTextContent**
@@ -59,9 +59,45 @@ function enqueueChunk() {
 _next_ function is best suited for calling _enqueueChunk_, because it is called whenever any promise needs to be resolve. Basically it holds the parsing process for sometimes, and that is best time to enqueue chunks in sink, e.g:
 
 ```javascript
-next(promise) { 
+next(promise) {
+  enqueueChunk();
   promise.then(() => {
     // Resume parsing process.
   });
 }
 ```
+
+**Using _streamTextContent_ internally in _getTextContent_**
+
+For not breaking the support for `getTextContent` API, we have created a parallel method `streamTextContent` to support Streams API in the process of retrieving the text content of PDFs. But it is better idea to use _streamTextContent_ internally in _getTextContent_, so that we can stream text content in that too. Using `readAllChunk` approach in _getTextContent_, will refactor the API something like:
+
+```javascript
+getTextContent() {
+  let readableStream = this.streamTextContent(params);
+
+  return new Promise(function(resolve, reject) {
+    function pump() {
+      reader.read().then(function({ value, done, }) {
+        if (done) {
+          resolve(textContent);
+          return;
+        }
+        // Build text content by looping through all read operations.
+        Util.extendObj(textContent.styles, value.styles);
+        Util.appendToArray(textContent.items, value.items);
+        pump();
+      }, reject);
+    }
+
+    let reader = readableStream.getReader();
+    let textContent = {
+      items: [],
+      styles: Object.create(null),
+    };
+
+    pump();
+  });
+}
+```
+
+
