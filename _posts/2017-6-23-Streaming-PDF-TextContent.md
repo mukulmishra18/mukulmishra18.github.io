@@ -41,7 +41,7 @@ Building whole text content at worker and sending back to main thread in bulk ta
 
 The above mentioned problems can be eliminated by incrementally sending data chunks from worker to main thread, and rendering PDF on the fly. In _streamTextContent_ method, instead of building the whole text content in woker, we are sending it to main thread whenever we have any.
 
-In the `[next](https://github.com/mozilla/pdf.js/blob/master/src/core/evaluator.js#L1433)` function of `PartialEvaluator`, we are calling `enqueueChunk()` to send back data chunks to main thread. If we look into the _enqueueChunk_ function, it is self explanatory:
+In the [`next`](https://github.com/mozilla/pdf.js/blob/master/src/core/evaluator.js#L1433) function of `PartialEvaluator`, we are calling `enqueueChunk()` to send back data chunks to main thread. If we look into the _enqueueChunk_ function, it is self explanatory:
 
 ```javascript
 function enqueueChunk() {
@@ -56,7 +56,7 @@ function enqueueChunk() {
 }
 ```
 
-_next_ function is best suited for calling _enqueueChunk_, because _next_ is called whenever any promise needs to be resolve, e.g:
+_next_ function is best suited for calling _enqueueChunk_, because it is called whenever any promise needs to be resolve. Basically it holds the parsing process for sometimes, and that is best time to enqueue chunks in sink, e.g:
 
 ```javascript
 next(promise) { 
@@ -65,5 +65,3 @@ next(promise) {
   });
 }
 ```
-
-_next_ function hold the parsing process for sometime(until promise is resolved), this is the best time to enqueue chunks to sink.
