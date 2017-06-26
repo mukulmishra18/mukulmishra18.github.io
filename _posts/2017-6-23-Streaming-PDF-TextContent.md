@@ -139,5 +139,12 @@ getTextContent() {
 **FPS(frame per second) graph for streaming data:**
 ![Imgur](http://i.imgur.com/dPsVzMc.png)
 
+<figure>
+	<a href="http://i.imgur.com/dPsVzMc.png"><img src="http://i.imgur.com/dPsVzMc.png" alt="stream-measurement"></a>
+	<figcaption><a href="http://i.imgur.com/dPsVzMc.png" title="FPS(frame per second) graph for streaming data"></a>FPS(frame per second) graph for streaming data</figcaption>
+</figure>
+
+
+
 **FPS(frame per second) graph for non streaming data:**
 ![Imgur](http://i.imgur.com/AOx24en.png)
