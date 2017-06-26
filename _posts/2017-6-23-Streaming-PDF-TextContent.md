@@ -124,8 +124,19 @@ getTextContent() {
 
 **Output:**
 
+| Branch\measurement[2] | 1 | 2 |
+|:--------|:-------:|--------:|
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+|----
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+
+{: .table}
+
+
 | Branch\measurement[2] | 1 	 | 2	  | 3	   | 4	    | 5 	 | 6	  |
-| --------------------- | ------ | ------ | ------ | ------ | ------ | ------ |
+| :-------------------- | :----: | :----: | :----: | :----: | :----: | -----: |
 | master 			    | 399.39 | 397.07 | 416.43 | 405.59 | 433.07 | 428.06 |
 | streams 				| 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
 
@@ -136,6 +147,6 @@ getTextContent() {
 | streams | 17.44 | 18.07 | 18.07 |
 
 
-1: Run script in web console to perform automatic scrolling.
-2: Memory used(in MB) during measurement.
-3: Average fps during measurement.
+[1]: Run script in web console to perform automatic scrolling.
+[2]: Memory used(in MB) during measurement.
+[3]: Average fps during measurement.
