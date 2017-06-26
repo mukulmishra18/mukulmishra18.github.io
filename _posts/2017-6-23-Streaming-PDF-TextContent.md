@@ -30,7 +30,7 @@ I would recommend to read my [last post](http://mukulmishra.me/blog/sendWithStre
 **Let's first understand how _getTextContent_ works:**
 
 When `getTextContent` API is called at main thread, it sends message to worker using `MessageHandler`.
-This message is handled by _[GetTextContent](https://github.com/mozilla/pdf.js/blob/master/src/core/worker.js#L877)_ handler in _worker.js_ file. Parsing of PDF commands are done in _evaluator.js_, `GetTextContent` handler calls `getTextContent` method of `PartialEvaluator` via _document.js_ file. In _getTextContent_ method of _PartialEvaluator_, whole [textContent](https://github.com/mozilla/pdf.js/blob/master/src/core/evaluator.js#L1188) is build and send back to main thread by resolving promises.
+This message is handled by _[GetTextContent](https://github.com/mozilla/pdf.js/blob/master/src/core/worker.js#L877)_ handler in _worker.js_ file. Parsing of PDF commands are done in _evaluator.js_, `GetTextContent` handler calls `getTextContent` method of `PartialEvaluator` via [_document.js_](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-12f6a5494fae2f6d944246a1830f8982R302) file. In _getTextContent_ method of _PartialEvaluator_, whole [textContent](https://github.com/mozilla/pdf.js/blob/master/src/core/evaluator.js#L1188) is build and send back to main thread by resolving promises.
 
 Building whole text content at worker and sending back to main thread in bulk take lots of memory. Text content is only available at main thread, when promise at `PartialEvaluator` is resolve(i.e. `resolve(textContent)`), that forces rendering processes to wait. This degrade user experience(by janky scrolling, slow rendering...).
 
@@ -99,6 +99,12 @@ getTextContent() {
 }
 ```
 
+#### Some changes to PDF.js viewer to use _streamTextContent_
+
+Some changes has made into the PDF.js standard [viewer](https://mozilla.github.io/pdf.js/web/viewer.html) to use _streamTextContent_ instead of _getTextContent_, so that we can measure live performance of Streams API support.
+
+For the same we have passed the _RedableStream_ from [pdf_page_view.js](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-c880b70cf7d6b97863eeb665a736c4baR448) to text_layer.js via [text_layer_builder.js](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-6a8d3c6754c77cfa0876314f0f54bed7R93). Reading chunks in [`_render`](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-986df9c532f6b9ab6cf81a23ce26e446R556) method of `TextLayerRenderTask`, and passing incrementally to [`_processItems`](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-986df9c532f6b9ab6cf81a23ce26e446R512) will lower memory usage of viewer. Cancelling the _read_ operation of stream in [`cancel`](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d#diff-986df9c532f6b9ab6cf81a23ce26e446R499) method when page is not into view, make viewer more responsive. 
+
 #### Performance measurement of streamTextContent:
 
 **Steps for measuring the performance:**
@@ -126,8 +132,8 @@ getTextContent() {
 
 | Branch\measurement[3] | 1     | 2     | 3     |
 | :-------------------- | :---: | :---: | ----: |
-| master 				| 16.74 | 16.25 | 16.81 |
-| streams 				| 17.44 | 18.07 | 18.07 |
+| master 				| 16.74 | 16.56 | 16.81 |
+| streams 				| 17.44 | 18.07 | 18.77 |
 {: .table}
 
 <br />
@@ -136,6 +142,10 @@ getTextContent() {
 [3] Average fps during measurement.<br />
 <br />
 
+**Result:**
+
+From the above measurements, we can conclude that we are using comparatively less memory using Streams API in PDF.js viewer. Using less memory and cancelling streaming of text content chunks, when page scrolled out of view, makes viewer more responsive.
+<br />
 
 **Measurement snapshorts**
 <figure>
