@@ -145,7 +145,7 @@ getTextContent() {
 
 
 <figure>
-	<a href=""><img src="stream.png" alt="stream-measurement-image"></a>
+	<a href="http://imgur.com/dm7etjW"><img src="http://imgur.com/dm7etjW" alt="stream-measurement-image"></a>
 	<figcaption><a href="" title="">fps(frame per second) graph for streaming data</a>.</figcaption>
 </figure>
 
