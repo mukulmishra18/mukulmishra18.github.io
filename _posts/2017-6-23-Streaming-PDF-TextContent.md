@@ -123,7 +123,7 @@ getTextContent() {
 | streams 				| 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
 {: .table}
 
-<br />
+
 | Branch\measurement[3] | 1     | 2     | 3     |
 | :-------------------- | :---: | :---: | ----: |
 | master 				| 16.74 | 16.25 | 16.81 |
@@ -149,3 +149,5 @@ getTextContent() {
 </figure>
 
 
+<br />
+Follow [streams-getTextContent PR](https://github.com/mozilla/pdf.js/pull/8488) for all the discussions or read the full code [here.](https://github.com/mukulmishra18/pdf.js/commit/0c13d0ff4618b3759d84a506390e31b573d7221d)
