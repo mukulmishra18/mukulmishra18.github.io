@@ -11,18 +11,13 @@ This is the third post in the series of my **Google Summer of Code 2017** experi
 First phase of coding is about to end, and we already have our first Streams API supported PDF.js API i.e. **streamTextContent**. This API is inspired from PDF.js [**getTextContent**](https://github.com/mozilla/pdf.js/blob/master/src/display/api.js#L958) API, that is used to extract text contents of PDFs. As name suggests, _streamTextContent_ can be used to stream text contents of PDFs incrementally in small chunks.
 
 #### So how it is going to help?
-
 Earlier we are using `getTextContent` API to retrieve text content of PDFs, that is not very efficient in terms of memory and speed. When _getTextContent_ requests text content from worker thread, it has to wait unit all the text contents are build. Text content is accessible in main thread only when it is completely build at worker thread and send via `MessageHandler`. Due to this reason, it creates inefficiency in terms of:
-
 - **Speed**: As we have to wait for building the whole text content.
-
 - **Memory**: As we have to store all the text content in worker thread and send in bulk.
 
 
 But using `streamTextContent` will solve this problem, as we can stream text contents in small _chunks_ whenever we have any in worker thread. This will eliminate the inefficiency in terms of:
-
 - **Speed**: As now, we don't have to wait in main thread for text contents and be able to start rendering process incrementally.
-
 - **Memory**: As now, we don't have to store whole text content in worker thread, and be able to stream text contents in small chunks.
 
 #### So how _streamTextContent_ works?
@@ -136,15 +131,16 @@ getTextContent() {
 [3] Average fps during measurement.<br />
 <br />
 
-**FPS(frame per second) graph for streaming data:**
-![Imgur](http://i.imgur.com/dPsVzMc.png)
 
+**Measurement snapshorts**
 <figure>
-	<a href="http://i.imgur.com/dPsVzMc.png"><img src="http://i.imgur.com/dPsVzMc.png" alt="stream-measurement"></a>
+	<a href="http://i.imgur.com/dPsVzMc.png"><img src="http://i.imgur.com/dPsVzMc.png" alt="measurement-with-stream"></a>
 	<figcaption><a href="http://i.imgur.com/dPsVzMc.png" title="FPS(frame per second) graph for streaming data"></a>FPS(frame per second) graph for streaming data</figcaption>
 </figure>
 
+<figure>
+	<a href="http://i.imgur.com/AOx24en.png"><img src="http://i.imgur.com/AOx24en.png" alt="measurement-without-stream"></a>
+	<figcaption><a href="http://i.imgur.com/AOx24en.png" title="FPS(frame per second) graph for non streaming data"></a>FPS(frame per second) graph for non streaming data</figcaption>
+</figure>
 
 
-**FPS(frame per second) graph for non streaming data:**
-![Imgur](http://i.imgur.com/AOx24en.png)
