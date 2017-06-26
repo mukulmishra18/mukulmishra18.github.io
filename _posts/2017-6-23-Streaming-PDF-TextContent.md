@@ -128,14 +128,29 @@ getTextContent() {
 | :-------------------- | :----: | :----: | :----: | :----: | :----: | -----: |
 | master 			    | 399.39 | 397.07 | 416.43 | 405.59 | 433.07 | 428.06 |
 | streams 				| 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
-
+{: .table}
 
 | Branch\measurement[3] | 1     | 2     | 3     |
 | :-------------------- | :---: | :---: | ----: |
 | master 				| 16.74 | 16.25 | 16.81 |
 | streams 				| 17.44 | 18.07 | 18.07 |
-
+{: .table}
 
 [1] Run script in web console to perform automatic scrolling.
+
 [2] Memory used(in MB) during measurement.
+
 [3] Average fps during measurement.
+
+
+
+<figure>
+	<a href=""><img src="stream.png" alt="stream-measurement-image"></a>
+	<figcaption><a href="" title="">fps(frame per second) graph for streaming data</a>.</figcaption>
+</figure>
+
+
+<figure>
+	<a href=""><img src="without-stream.png" alt="without-stream-measurement-image"></a>
+	<figcaption><a href="" title="">fps(frame per second) graph for non streaming data</a>.</figcaption>
+</figure>
