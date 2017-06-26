@@ -106,20 +106,15 @@ getTextContent() {
 **Steps for measuring the performance:**
 
 - Open the viewer in master branch, and paste [this](https://gist.github.com/mukulmishra18/831e74fc0d49398f3172c5af0c6c4afc) code in console to take data for automation of scrolling.
-
 - Paste above taken data(or [this](https://gist.github.com/mukulmishra18/784136c6b75dacf6043c38d18039d0d5)) into the console(as `rr = data`), and run [this](https://gist.github.com/mukulmishra18/19e53e31fb89ce704866a7e2ad06d3a5) code in console to perform automatic viewer scrolling.
-
 - Measure the memory usage using devtools or run [this](https://gist.github.com/mukulmishra18/18635de4c82522bde3e7c4c0761f3365) code as `python name_of_file.py <pID>`, where pID is process ID of viewer. This will give peak memory used, when process ends.
 
 
 **Measurement Configuration:**
 
 - Operating system: Ubuntu 14.04 LTS
-
 - Browser: Chrome (version: 58.0.3)
-
 - PDF: [http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf](http://www.pharmazeutische-zeitung.de/fileadmin/pdf/PZ-Beilage-ApBetrO_2012_21.pdf)
-
 - script[1]: [https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049](https://gist.github.com/mukulmishra18/9954e1e2c3c254c77b69c8985fe97049)
 
 **Output:**
@@ -139,17 +134,12 @@ getTextContent() {
 [1] Run script in web console to perform automatic scrolling.<br />
 [2] Memory used(in MB) during measurement.<br />
 [3] Average fps during measurement.<br />
-
+<br />
 
 ![Imgur](http://i.imgur.com/dm7etjW.png)
 
 <figure>
-	<a href="http://imgur.com/dm7etjW"><img src="http://imgur.com/dm7etjW" alt="stream-measurement-image"></a>
+	<a href="http://imgur.com/dm7etjW"><img src="http://i.imgur.com/dm7etjW" alt="stream-measurement-image"></a>
 	<figcaption><a href="" title="">fps(frame per second) graph for streaming data</a>.</figcaption>
 </figure>
 
-
-<figure>
-	<a href="https://github.com/mukulmishra18/mukulmishra18.github.io/blob/master/images/without-stream.png"><img src="https://github.com/mukulmishra18/mukulmishra18.github.io/blob/master/images/without-stream.png" alt="without-stream-measurement-image"></a>
-	<figcaption><a href="" title="">fps(frame per second) graph for non streaming data</a>.</figcaption>
-</figure>
