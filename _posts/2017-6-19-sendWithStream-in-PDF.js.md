@@ -35,11 +35,8 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 #### Some basic terminology used in sendWithStream(also defined in [_Streams Spec_](http://streams.spec.whatwg.org/)), we need to understand first:
 
 - **Queuing Strategy**: A _queuing strategy_ is an object(`{ highWaterMark, size }`) that determines how a stream should signal _backpressure_ based on the state of its internal queue.
-
 - **Backpressure**: The process of normalizing flow of chunks from the source to destination is called _Backpressure_. It is used to regulate the speed of flow of chunks, and signal source to slow down the flow when internal queue is full.
-
 - **High Water Mark**: Maximum number of chunks that can be enqueued into the _internal queue_ to fill it completely. When number of chunks in internal queue reached to high water mark, _backpressure_ is signaled to stop further production of chunk from source.
-
 - **Desired Size**: It is the required number of chunks that is needed to fill the internal queue completely. The resulting difference, high water mark minus total size, is used to determine the _desired size_.
 
 
@@ -48,9 +45,7 @@ messageHandler1.sendWithPromise('fakeHandler', {});
 `sendWithStream` method is used to send stream action messages to other side(e.g worker) and store incoming data in stream’s _internal queue_, that can be read using stream’s reader. It returns an instance of `ReadableStream` that can be used to manipulate the flow of data using its **underlyingSources** = `{ start() { }, pull() { }, cancel() { } }`.
 
 - **start**: It is called immediately and used to adapt push source by setting up relevant event listeners. In `messageHandler`, it is used to send message to other side to notify the start of particular action.
-
 - **pull**: It  is called whenever stream’s internal queue of chunks is not full, and will be called repeatedly until the queue reaches its _high water mark_.
-
 - **cancel**: It is used to cancel/close the _underlying source_.
 
 #### [StreamSink](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1425)??, why it is required?
@@ -93,21 +88,15 @@ is to write into the sink(by calling `sink.enqueue()`) and send the data back to
 #### Components of StreamSink:
 
 - **enqueue:** This method is used to enqueue the data into the controller by sending _enqueue_ message to main thread. 
-
 - **close:** This method is used to close the controller by sending _close_ message to main thread.
-
 - **error:** This method is used to error the controller by sending _error_ message to main thread.
-
 - **sinkCapability:** Promise capability of sink(returned by `createPromiseCapability`), resolves the capability(by calling`sinkCapability.resolve`) whenever needs.
-
 - **onPull:**(optional) This method calls whenever pull _underlyingSource_ is called.
-
 - **onCancel:**(optional) This method calls whenever cancel _underlyingSource_ is called.
-
 - **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to _desiredSize_ of stream whenever pull is called and decresed by size of chunk whenever enqueue is performed.
-
 - **ready:** This property defines the state of sink(i.e. pending or resolved promise). If `this.desiredSize <= 0` ready is in pending state else ready is resolved. Enqueue is not performed when ready is in pending state.
 
 **Note:** As for now, we are unable to send _promises_ and _streams_ to worker thread as transferable objects, see [this](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage). Maybe in future we can do so, but for now we have to support old browsers.
 
+<br />
 Follow [sendWithStream PR](https://github.com/mozilla/pdf.js/pull/8430) for all the discussions or read the full code [here.](https://github.com/mukulmishra18/pdf.js/commit/bbd9968f76c68f6120a6e36825796347b7bb152a)

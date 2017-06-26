@@ -11,12 +11,15 @@ This is the third post in the series of my **Google Summer of Code 2017** experi
 First phase of coding is about to end, and we already have our first Streams API supported PDF.js API i.e. **streamTextContent**. This API is inspired from PDF.js [**getTextContent**](https://github.com/mozilla/pdf.js/blob/master/src/display/api.js#L958) API, that is used to extract text contents of PDFs. As name suggests, _streamTextContent_ can be used to stream text contents of PDFs incrementally in small chunks.
 
 #### So how it is going to help?
+
 Earlier we are using `getTextContent` API to retrieve text content of PDFs, that is not very efficient in terms of memory and speed. When _getTextContent_ requests text content from worker thread, it has to wait unit all the text contents are build. Text content is accessible in main thread only when it is completely build at worker thread and send via `MessageHandler`. Due to this reason, it creates inefficiency in terms of:
+
 - **Speed**: As we have to wait for building the whole text content.
 - **Memory**: As we have to store all the text content in worker thread and send in bulk.
 
 
 But using `streamTextContent` will solve this problem, as we can stream text contents in small _chunks_ whenever we have any in worker thread. This will eliminate the inefficiency in terms of:
+
 - **Speed**: As now, we don't have to wait in main thread for text contents and be able to start rendering process incrementally.
 - **Memory**: As now, we don't have to store whole text content in worker thread, and be able to stream text contents in small chunks.
 
@@ -120,12 +123,14 @@ getTextContent() {
 | streams 				| 390.02 | 389.16 | 385.09 | 384.05 | 387.34 | 387.46 |
 {: .table}
 
+<br />
 | Branch\measurement[3] | 1     | 2     | 3     |
 | :-------------------- | :---: | :---: | ----: |
 | master 				| 16.74 | 16.25 | 16.81 |
 | streams 				| 17.44 | 18.07 | 18.07 |
 {: .table}
 
+<br />
 [1] Run script in web console to perform automatic scrolling.<br />
 [2] Memory used(in MB) during measurement.<br />
 [3] Average fps during measurement.<br />
