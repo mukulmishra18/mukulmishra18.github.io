@@ -136,10 +136,8 @@ getTextContent() {
 [3] Average fps during measurement.<br />
 <br />
 
-![Imgur](http://i.imgur.com/dm7etjW.png)
+**FPS(frame per second) graph for streaming data:**
+![Imgur](http://i.imgur.com/dPsVzMc.png)
 
-<figure>
-	<a href="http://imgur.com/dm7etjW"><img src="http://i.imgur.com/dm7etjW" alt="stream-measurement-image"></a>
-	<figcaption><a href="" title="">fps(frame per second) graph for streaming data</a>.</figcaption>
-</figure>
-
+**FPS(frame per second) graph for non streaming data:**
+![Imgur](http://i.imgur.com/AOx24en.png)
