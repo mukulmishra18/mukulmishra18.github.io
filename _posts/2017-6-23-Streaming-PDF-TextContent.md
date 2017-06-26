@@ -136,16 +136,13 @@ getTextContent() {
 | streams 				| 17.44 | 18.07 | 18.07 |
 {: .table}
 
-[1] Run script in web console to perform automatic scrolling.
-
-[2] Memory used(in MB) during measurement.
-
-[3] Average fps during measurement.
+[1] Run script in web console to perform automatic scrolling.<br />
+[2] Memory used(in MB) during measurement.<br />
+[3] Average fps during measurement.<br />
 
 
 ![Imgur](http://i.imgur.com/dm7etjW.png)
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="dm7etjW"><a href="//imgur.com/dm7etjW">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 <figure>
 	<a href="http://imgur.com/dm7etjW"><img src="http://imgur.com/dm7etjW" alt="stream-measurement-image"></a>
 	<figcaption><a href="" title="">fps(frame per second) graph for streaming data</a>.</figcaption>
@@ -153,6 +150,6 @@ getTextContent() {
 
 
 <figure>
-	<a href=""><img src="without-stream.png" alt="without-stream-measurement-image"></a>
+	<a href="https://github.com/mukulmishra18/mukulmishra18.github.io/blob/master/images/without-stream.png"><img src="https://github.com/mukulmishra18/mukulmishra18.github.io/blob/master/images/without-stream.png" alt="without-stream-measurement-image"></a>
 	<figcaption><a href="" title="">fps(frame per second) graph for non streaming data</a>.</figcaption>
 </figure>
