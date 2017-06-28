@@ -75,7 +75,6 @@ let streamSink = {
     sendStreamRequest({ stream: 'error', reason, });
   },
 
-  sinkCapability: capability,
   onPull: null,
   onCancel: null,
   desiredSize,
@@ -90,7 +89,6 @@ is to write into the sink(by calling `sink.enqueue()`) and send the data back to
 - **enqueue:** This method is used to enqueue the data into the controller by sending _enqueue_ message to main thread. 
 - **close:** This method is used to close the controller by sending _close_ message to main thread.
 - **error:** This method is used to error the controller by sending _error_ message to main thread.
-- **sinkCapability:** Promise capability of sink(returned by `createPromiseCapability`), resolves the capability(by calling`sinkCapability.resolve`) whenever needs.
 - **onPull:**(optional) This method calls whenever pull _underlyingSource_ is called.
 - **onCancel:**(optional) This method calls whenever cancel _underlyingSource_ is called.
 - **desiredSize:** This property defines the number of data chunks required to fill the stream's internal queue completely. Reseted to _desiredSize_ of stream whenever pull is called and decresed by size of chunk whenever enqueue is performed.
