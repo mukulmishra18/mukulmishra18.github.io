@@ -18,7 +18,7 @@ theme: jekyll-theme-so-simple
 locale: en-US
 title: "Mukul Mishra"
 description: "My personal blog"
-baseurl: # the subpath of your site, e.g. "/blog"
+baseurl: "/"
 url: "https://mukulmishra18.github.io"
 logo: "logo.jpg"
 date_format: "%B %-d, %Y"
