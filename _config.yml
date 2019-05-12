@@ -19,7 +19,7 @@ locale: en-US
 title: "Mukul Mishra"
 description: "My personal blog"
 baseurl: ""
-url: "https://mukulmishra18.github.io/"
+url: ""
 logo: "logo.jpg"
 date_format: "%B %-d, %Y"
 read_time: # reading time estimates, e.g. true
