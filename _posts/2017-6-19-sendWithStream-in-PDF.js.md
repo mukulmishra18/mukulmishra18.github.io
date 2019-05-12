@@ -6,7 +6,7 @@ categories: blog
 
 ## Hi !!
 
-This is the second post in the series of my **Google Summer of Code 2017** experience. In the [last post](http://mukulmishra.me/blog/GSoC-First-Post/), I gave a brief introduction of my project. In this post, I am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
+This is the second post in the series of my **Google Summer of Code 2017** experience. In the [last post](https://mukulmishra18.github.io/blog/GSoC-First-Post/), I gave a brief introduction of my project. In this post, I am going to talk about [**sendWithStream**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1370) method of [**messageHandler**](https://github.com/mozilla/pdf.js/blob/master/src/shared/util.js#L1239).
 
 ## What is messageHandler, and how it is used?
 

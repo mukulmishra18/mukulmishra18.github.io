@@ -34,7 +34,7 @@ So Simple now requires [Jekyll](http://jekyllrb.com/) 3.0. Make sure to run `bun
 
 If you are creating a new Jekyll site using So Simple follow these steps:
 
-1. Fork the [So Simple repo](http://github.com/mmistakes/so-simple-theme/fork).
+1. Fork the [So Simple repo](https://github.com/mmistakes/so-simple-theme/fork).
 2. Clone the repo you just forked and rename it.
 3. [Install Bundler](http://bundler.io) `gem install bundler` and Run `bundle install` to install Jekyll and all dependencies.
 4. Update `_config.yml`, add navigation, and replace demo posts and pages with your own. Full details below.

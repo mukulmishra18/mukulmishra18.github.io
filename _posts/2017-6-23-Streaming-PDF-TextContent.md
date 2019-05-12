@@ -6,7 +6,7 @@ categories: blog
 
 ## Hello !!
 
-This is the third post in the series of my **Google Summer of Code 2017** experience. In [last post](http://mukulmishra.me/blog/sendWithStream-in-PDF.js/), I gave detailed overview of `SendWithStream` method of `MessageHandler`. In this post, I am going to give updates of [my project](https://github.com/mozilla/pdf.js/projects/4) _Streams API in PDF.js_.
+This is the third post in the series of my **Google Summer of Code 2017** experience. In [last post](https://mukulmishra18.github.io/blog/sendWithStream-in-PDF.js/), I gave detailed overview of `SendWithStream` method of `MessageHandler`. In this post, I am going to give updates of [my project](https://github.com/mozilla/pdf.js/projects/4) _Streams API in PDF.js_.
 
 First phase of coding is about to end, and we already have our first Streams API supported PDF.js API, i.e., **streamTextContent**. This API is inspired from PDF.js [**getTextContent**](https://github.com/mozilla/pdf.js/blob/master/src/display/api.js#L958) API, that is used to extract text contents of PDFs. As name suggests, _streamTextContent_ can be used to stream text contents of PDFs incrementally in small chunks.
 
@@ -25,7 +25,7 @@ But using `streamTextContent` will solve this problem, as we can stream text con
 
 #### So how _streamTextContent_ works?
 
-I would recommend to read my [last post](http://mukulmishra.me/blog/sendWithStream-in-PDF.js/) first, it will explain how we are streaming data between the two threads(main + worker).
+I would recommend to read my [last post](https://mukulmishra18.github.io/blog/sendWithStream-in-PDF.js/) first, it will explain how we are streaming data between the two threads(main + worker).
 
 **Let's first understand how _getTextContent_ works:**
 

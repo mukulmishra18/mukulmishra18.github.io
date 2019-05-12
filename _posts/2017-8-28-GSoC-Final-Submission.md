@@ -37,9 +37,9 @@ This project aims to implement Streams API polyfill for PDF.js, and use it for n
 - Some changes to use streamOperatorList in PDF.js Viewer
 
 #### Link to blog post related to the project:
-- [GSoC first post, getting started with PDF.js](http://mukulmishra.me/blog/GSoC-First-Post/)
-- [sendWithStream in PDF.js](http://mukulmishra.me/blog/sendWithStream-in-PDF.js/)
-- [Streaming PDF Text Content](http://mukulmishra.me/blog/Streaming-PDF-TextContent/)
-- [PDF.js Network Streaming](http://mukulmishra.me/blog/PDF.js-Network-Streaming/)
-- [PDF.js Node Stream](http://mukulmishra.me/blog/PDF.js-Node-Stream/)
-- [PDF.js Fetch Stream](http://mukulmishra.me/blog/PDF.js-Fetch-Stream/)
+- [GSoC first post, getting started with PDF.js](https://mukulmishra18.github.io/blog/GSoC-First-Post/)
+- [sendWithStream in PDF.js](https://mukulmishra18.github.io/blog/sendWithStream-in-PDF.js/)
+- [Streaming PDF Text Content](https://mukulmishra18.github.io/blog/Streaming-PDF-TextContent/)
+- [PDF.js Network Streaming](https://mukulmishra18.github.io/blog/PDF.js-Network-Streaming/)
+- [PDF.js Node Stream](https://mukulmishra18.github.io/blog/PDF.js-Node-Stream/)
+- [PDF.js Fetch Stream](https://mukulmishra18.github.io/blog/PDF.js-Fetch-Stream/)
