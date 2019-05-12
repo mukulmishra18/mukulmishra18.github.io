@@ -18,8 +18,8 @@ theme: jekyll-theme-so-simple
 locale: en-US
 title: "Mukul Mishra"
 description: "My personal blog"
-baseurl: "/so-simple-theme"
-url: "https://mukulmishra18.github.io"
+baseurl: ""
+url: "https://mukulmishra18.github.io/"
 logo: "logo.jpg"
 date_format: "%B %-d, %Y"
 read_time: # reading time estimates, e.g. true
